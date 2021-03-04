@@ -54,14 +54,59 @@ public class Figures {
             gl.glEnd();
         }
     }
-    public static void renderCircle(GL2 gl, Vector2 cen, double r, boolean filled){
-        if (filled){
-            double x;
-            double y;
-            double a;
+    public static void renderCircle(GL2 gl, Vector2 cen, double r, boolean filled) {
+        double a = 0;
+        if (filled) {
             gl.glBegin(GL.GL_TRIANGLE_FAN);
             gl.glVertex2d(cen.getX(), cen.getY());
-
+            for (double i = 0; i <= Math.PI * 2; i += Math.PI / 180) {
+                gl.glVertex2d(r * Math.cos(i) + cen.getX(), r * Math.sin(i) + cen.getY());
+                if ((a + 0.016666 < 1) && (i < Math.PI / 3)) {
+                    gl.glColor3d(1, a, 0);
+                    a += 0.016666;
+                } else if ((a - 0.016666 > 0) && (i < (Math.PI * 2) / 3)) {
+                    gl.glColor3d(a, 1, 0);
+                    a -= 0.016666;
+                } else if ((a + 0.016666 < 1) && (i < Math.PI)) {
+                    gl.glColor3d(0, 1, a);
+                    a += 0.016666;
+                } else if ((a - 0.016666 > 0) && (i < Math.PI * 4 / 3)) {
+                    gl.glColor3d(0, a, 1);
+                    a -= 0.016666;
+                } else if ((a + 0.016666 < 1) && (i < Math.PI * 5 / 3)) {
+                    gl.glColor3d(a, 0, 1);
+                    a += 0.016666;
+                } else {
+                    gl.glColor3d(1, 0, a);
+                    a -= 0.016666;
+                }
+            }
+            gl.glEnd();
+        } else {
+            gl.glBegin(GL.GL_LINE_STRIP);
+            for (double i = 0; i <= Math.PI * 2; i += Math.PI / 180) {
+                gl.glVertex2d(r * Math.cos(i) + cen.getX(), r * Math.sin(i) + cen.getY());
+                if ((a + 0.016666 < 1) && (i < Math.PI / 3)) {
+                    gl.glColor3d(1, a, 0);
+                    a += 0.016666;
+                } else if ((a - 0.016666 > 0) && (i < (Math.PI * 2) / 3)) {
+                    gl.glColor3d(a, 1, 0);
+                    a -= 0.016666;
+                } else if ((a + 0.016666 < 1) && (i < Math.PI)) {
+                    gl.glColor3d(0, 1, a);
+                    a += 0.016666;
+                } else if ((a - 0.016666 > 0) && (i < Math.PI * 4 / 3)) {
+                    gl.glColor3d(0, a, 1);
+                    a -= 0.016666;
+                } else if ((a + 0.016666 < 1) && (i < Math.PI * 5 / 3)) {
+                    gl.glColor3d(a, 0, 1);
+                    a += 0.016666;
+                } else {
+                    gl.glColor3d(1, 0, a);
+                    a -= 0.016666;
+                }
+            }
+            gl.glEnd();
         }
     }
 }

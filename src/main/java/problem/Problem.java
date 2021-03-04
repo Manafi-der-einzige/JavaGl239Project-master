@@ -131,6 +131,6 @@ public class Problem {
      * @param gl переменная OpenGL для рисования
      */
     public void render(GL2 gl) {
-        Figures.renderCircle(gl, new Vector2(0, 0), 0.5, true);
+        Figures.renderCircle(gl, new Vector2(0, 0), 0.8, true);
     }
 }
