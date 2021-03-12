@@ -9,6 +9,11 @@ import java.util.Random;
  */
 public class Point {
     /**
+     * solve - входит в решающую окружность или нет
+     */
+    boolean solve = false;
+
+    /**
      * x - координата точки
      */
     double x;
@@ -47,7 +52,12 @@ public class Point {
      * @param gl переменная OpenGl для рисования
      */
     void render(GL2 gl) {
-        gl.glColor3d(0.5, 0.2, 0.7);
+        if (!solve){
+            gl.glColor3d(0.5, 0.2, 0.7);
+        }
+        else{
+            gl.glColor3d(1, 0, 0);
+        }
         gl.glPointSize(3);
         gl.glBegin(GL.GL_POINTS);
         gl.glVertex2d(x, y);

@@ -1,15 +1,18 @@
 package problem;
 
+import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
+
 public class Circle {
     double x;
     double y;
     double r;
-    public void Circle(){
+    Circle(){
         r = 1;
         x = 0;
         y = 0;
     }
-    public void Circle(double x, double y, double r){
+    Circle(double x, double y, double r){
         this.r = r;
         this.x = x;
         this.y = y;
@@ -25,8 +28,7 @@ public class Circle {
     public void SetR(Point p){
         r = Math.sqrt((p.x - x) * (p.x - x) + (p.y - y) * (p.y - y));
     }
-    public void SetCen(Point p){
-        x = p.x;
-        y = p.y;
+    void render(GL2 gl){
+        Figures.renderCircle(gl, new Vector2(x, y), r, false);
     }
 }

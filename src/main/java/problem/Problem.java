@@ -32,6 +32,7 @@ public class Problem {
      * список точек
      */
     private ArrayList<Point> points;
+    private Circle circle;
 
     /**
      * Конструктор класса задачи
@@ -56,9 +57,13 @@ public class Problem {
      * Решить задачу
      */
     public void solve() {
+        for (Point p : points){
+            p.solve = false;
+        }
         Circle circle1 = new Circle();
-        Circle circle2 = new Circle();
         double minR = 4;
+        double cenx = 0;
+        double ceny = 0;
         int k = 0;
         for (Point p : points){
             for (Point p2 : points){
@@ -71,15 +76,23 @@ public class Problem {
                     }
                     if (((k == points.size() / 2) && (points.size() % 2 == 0)) || ((k == (points.size() / 2) + 1) && (points.size() % 2 == 1))){
                         k = 0;
-                        if (minR - circle1.r > 0.00001){
+                        if (minR - circle1.r >= 0.00001){
                             minR = circle1.r;
+                            cenx = circle1.x;
+                            ceny = circle1.y;
                         }
                         break;
                     }
                 }
+                k = 0;
             }
         }
-        System.out.println(minR);
+        this.circle = new Circle(cenx, ceny, minR);
+        for (Point p : points){
+            if (circle.inside(p)){
+                p.solve = true;
+            }
+        }
     }
 
     /**
@@ -135,6 +148,7 @@ public class Problem {
      */
     public void clear() {
         points.clear();
+        circle = null;
     }
 
     /**
@@ -146,5 +160,6 @@ public class Problem {
         for (Point point : points) {
             point.render(gl);
         }
+        if (circle != null){circle.render(gl);}
     }
 }
