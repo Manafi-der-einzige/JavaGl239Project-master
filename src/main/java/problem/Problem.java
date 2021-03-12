@@ -13,13 +13,15 @@ public class Problem {
      * текст задачи
      */
     public static final String PROBLEM_TEXT = "ПОСТАНОВКА ЗАДАЧИ:\n" +
-            "Заданы два множества точек в пространстве.\n" +
-            "Требуется построить пересечения и разность этих множеств";
+            "На плоскости задано множество точек.\n" +
+            "Найти такие две окружности, что их центры находятся в точках заданного множества, \n" +
+            "Внутри каждой из этих окружностей находится хотя бы половина из всех точек заданного множества. \n" +
+            "Меньший из двух радиусов минимален.";
 
     /**
      * заголовок окна
      */
-    public static final String PROBLEM_CAPTION = "Итоговый проект ученика 10-7 Иванова Ивана";
+    public static final String PROBLEM_CAPTION = "Итоговый проект ученика 10-7 Александрова Владислава";
 
     /**
      * путь к файлу
@@ -43,10 +45,10 @@ public class Problem {
      *
      * @param x      координата X точки
      * @param y      координата Y точки
-     * @param setVal номер множества
      */
-    public void addPoint(double x, double y, int setVal) {
-        Point point = new Point(x, y, setVal);
+
+    public void addPoint(double x, double y) {
+        Point point = new Point(x, y);
         points.add(point);
     }
 
@@ -54,19 +56,30 @@ public class Problem {
      * Решить задачу
      */
     public void solve() {
-        // перебираем пары точек
-        for (Point p : points) {
-            for (Point p2 : points) {
-                // если точки являются разными
-                if (p != p2) {
-                    // если координаты у них совпадают
-                    if (Math.abs(p.x - p2.x) < 0.0001 && Math.abs(p.y - p2.y) < 0.0001) {
-                        p.isSolution = true;
-                        p2.isSolution = true;
+        Circle circle1 = new Circle();
+        Circle circle2 = new Circle();
+        double minR = 4;
+        int k = 0;
+        for (Point p : points){
+            for (Point p2 : points){
+                circle1.x = p.x;
+                circle1.y = p.y;
+                circle1.SetR(p2);
+                for (Point p3 : points){
+                    if (circle1.inside(p3)){
+                        k++;
+                    }
+                    if (((k == points.size() / 2) && (points.size() % 2 == 0)) || ((k == (points.size() / 2) + 1) && (points.size() % 2 == 1))){
+                        k = 0;
+                        if (minR - circle1.r > 0.00001){
+                            minR = circle1.r;
+                        }
+                        break;
                     }
                 }
             }
         }
+        System.out.println(minR);
     }
 
     /**
@@ -81,9 +94,8 @@ public class Problem {
             while (sc.hasNextLine()) {
                 double x = sc.nextDouble();
                 double y = sc.nextDouble();
-                int setVal = sc.nextInt();
                 sc.nextLine();
-                Point point = new Point(x, y, setVal);
+                Point point = new Point(x, y);
                 points.add(point);
             }
         } catch (Exception ex) {
@@ -98,7 +110,7 @@ public class Problem {
         try {
             PrintWriter out = new PrintWriter(new FileWriter(FILE_NAME));
             for (Point point : points) {
-                out.printf("%.2f %.2f %d\n", point.x, point.y, point.setNumber);
+                out.printf("%.2f %.2f %d\n", point.x, point.y);
             }
             out.close();
         } catch (IOException ex) {
@@ -131,6 +143,8 @@ public class Problem {
      * @param gl переменная OpenGL для рисования
      */
     public void render(GL2 gl) {
-        Figures.renderCircle(gl, new Vector2(0, 0), 0.8, true);
+        for (Point point : points) {
+            point.render(gl);
+        }
     }
 }
