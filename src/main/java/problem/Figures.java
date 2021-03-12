@@ -24,7 +24,6 @@ public class Figures {
             gl.glVertex2d(pos1.getX(), pos1.getY());
             gl.glVertex2d(pos2.getX(), pos2.getY());
             gl.glVertex2d(pos3.getX(), pos3.getY());
-            gl.glEnd();
         }
         else{
             gl.glBegin(GL.GL_LINE_STRIP);
@@ -32,8 +31,8 @@ public class Figures {
             gl.glVertex2d(pos2.getX(), pos2.getY());
             gl.glVertex2d(pos3.getX(), pos3.getY());
             gl.glVertex2d(pos1.getX(), pos1.getY());
-            gl.glEnd();
         }
+        gl.glEnd();
     }
     public static void renderQuad(GL2 gl, Vector2 pos1, Vector2 pos2, Vector2 pos3, Vector2 pos4, boolean filled){
         if (filled) {
@@ -42,7 +41,6 @@ public class Figures {
             gl.glVertex2d(pos2.getX(), pos2.getY());
             gl.glVertex2d(pos3.getX(), pos3.getY());
             gl.glVertex2d(pos4.getX(), pos4.getY());
-            gl.glEnd();
         }
         else{
             gl.glBegin(GL.GL_LINE_STRIP);
@@ -51,8 +49,8 @@ public class Figures {
             gl.glVertex2d(pos3.getX(), pos3.getY());
             gl.glVertex2d(pos4.getX(), pos4.getY());
             gl.glVertex2d(pos1.getX(), pos1.getY());
-            gl.glEnd();
         }
+        gl.glEnd();
     }
     public static void renderCircle(GL2 gl, Vector2 cen, double r, boolean filled) {
         double a = 0;
@@ -81,7 +79,6 @@ public class Figures {
                     a -= 0.016666;
                 }
             }
-            gl.glEnd();
         } else {
             gl.glBegin(GL.GL_LINE_STRIP);
             for (double i = 0; i <= Math.PI * 2; i += Math.PI / 180) {
@@ -106,7 +103,7 @@ public class Figures {
                     a -= 0.016666;
                 }
             }
-            gl.glEnd();
         }
+        gl.glEnd();
     }
 }

@@ -75,7 +75,6 @@ public class Problem {
                         k++;
                     }
                     if (((k == points.size() / 2) && (points.size() % 2 == 0)) || ((k == (points.size() / 2) + 1) && (points.size() % 2 == 1))){
-                        k = 0;
                         if (minR - circle1.r >= 0.00001){
                             minR = circle1.r;
                             cenx = circle1.x;
