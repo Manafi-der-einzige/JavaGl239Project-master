@@ -28,7 +28,7 @@ public class Circle {
     public void SetR(Point p){
         r = Math.sqrt((p.x - x) * (p.x - x) + (p.y - y) * (p.y - y));
     }
-    void render(GL2 gl){
+    public void render(GL2 gl){
         Figures.renderCircle(gl, new Vector2(x, y), r, false);
     }
 }

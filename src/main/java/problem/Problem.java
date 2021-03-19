@@ -77,7 +77,7 @@ public class Problem {
                         k++;
                     }
                     if (((k == points.size() / 2) && (points.size() % 2 == 0)) || ((k == (points.size() / 2) + 1) && (points.size() % 2 == 1))){
-                        if (circle.r > circle1.r){
+                        if (circle.r - circle1.r > 0.001){
                             circle.r = circle1.r;
                             circle.x = circle1.x;
                             circle.y = circle1.y;
@@ -88,27 +88,26 @@ public class Problem {
                 k = 0;
             }
         }
-        k = 0;
         Rcircle = new Circle(0, 0, 4);
-        for (Point p3 : points) {
-            for (Point p : points) {
-                circle1.SetR(p);
-                circle1.x = p3.x;
-                circle1.y = p3.y;
-                for (Point p2 : points) {
-                    if ((circle1.x == circle.x) && (circle1.y == circle.y)){
-                        break;
-                    }
-                    if (Rcircle.inside(p2)) {
-                        k++;
-                    }
-                    if (((k == points.size() / 2) && (points.size() % 2 == 0)) || ((k == (points.size() / 2) + 1) && (points.size() % 2 == 1))) {
-                        if (Rcircle.r > circle1.r){
-                            Rcircle.r = circle1.r;
-                            Rcircle.x = circle1.x;
-                            Rcircle.y = circle1.y;
+        k = 0;
+        for (Point p : points){
+            for (Point p2 : points){
+                if ((Math.abs(p.x - circle.x) > 0.001) && (Math.abs(p.y - circle.y) > 0.001)) {
+                    circle1.x = p.x;
+                    circle1.y = p.y;
+                    circle1.SetR(p2);
+                    for (Point p3 : points) {
+                        if (circle1.inside(p3)) {
+                            k++;
                         }
-                        break;
+                        if (((k == points.size() / 2) && (points.size() % 2 == 0)) || ((k == (points.size() / 2) + 1) && (points.size() % 2 == 1))) {
+                            if (Rcircle.r > circle1.r) {
+                                Rcircle.r = circle1.r;
+                                Rcircle.x = circle1.x;
+                                Rcircle.y = circle1.y;
+                            }
+                            break;
+                        }
                     }
                 }
                 k = 0;
@@ -149,7 +148,7 @@ public class Problem {
         try {
             PrintWriter out = new PrintWriter(new FileWriter(FILE_NAME));
             for (Point point : points) {
-                out.printf("%.2f %.2f %d\n", point.x, point.y);
+                out.printf("%.2f %.2f\n", point.x, point.y);
             }
             out.close();
         } catch (IOException ex) {

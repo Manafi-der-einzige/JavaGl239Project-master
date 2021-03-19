@@ -53,7 +53,7 @@ public class Point {
      */
     void render(GL2 gl) {
         if (!solve){
-            gl.glColor3d(0.5, 0.2, 0.7);
+            gl.glColor3d(0, 0, 1);
         }
         else{
             gl.glColor3d(1, 0, 0);
