@@ -53,12 +53,12 @@ public class Point {
      */
     void render(GL2 gl) {
         if (!solve){
-            gl.glColor3d(0, 0, 1);
+            gl.glColor3d(0, 1, 0);
         }
         else{
             gl.glColor3d(1, 0, 0);
         }
-        gl.glPointSize(3);
+        gl.glPointSize(5);
         gl.glBegin(GL.GL_POINTS);
         gl.glVertex2d(x, y);
         gl.glEnd();

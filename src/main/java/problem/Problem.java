@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Класс задачи
  */
-public class Problem {
+public class    Problem {
     /**
      * текст задачи
      */
@@ -35,6 +35,10 @@ public class Problem {
      * список точек
      */
     private ArrayList<Point> points;
+    /**
+     * circle - минимальная окружность
+     * Rcircle - вторичная.
+     */
     private Circle circle;
     private Circle Rcircle;
 
@@ -61,22 +65,26 @@ public class Problem {
      * Решить задачу
      */
     public void solve() {
-        for (Point p : points){
-            p.solve = false;
+        for (Point p : points){ // Перекрашиваем точки в обычный цвет, если они были перекрашены при предыдущем решении
+            p.solve = false;// solve - поле класса Point, отвечающее за цвет.
         }
-        Circle circle1 = new Circle();
+        Circle circle1 = new Circle(); // Временная окружность, в которую мы перезаписываем все перебираемые окружности
         circle = new Circle(0, 0, 4);
-        int k = 0;
-        for (Point p : points){
-            for (Point p2 : points){
-                circle1.x = p.x;
-                circle1.y = p.y;
+        int k = 0; // Счётчик точек, находящихся внутри окружности.
+        for (Point p1 : points){ // Перебираем точки центра окружности
+            for (Point p2 : points){ // Перебираем точки радиуса окружности
+                circle1.x = p1.x;
+                circle1.y = p1.y;
                 circle1.SetR(p2);
-                for (Point p3 : points){
-                    if (circle1.inside(p3)){
+                for (Point p3 : points){ // Перебираем точки множества
+                    if (circle1.inside(p3)){ // Записываем, сколько их лежит внутри перебираемой окружности
                         k++;
                     }
                     if (((k == points.size() / 2) && (points.size() % 2 == 0)) || ((k == (points.size() / 2) + 1) && (points.size() % 2 == 1))){
+                        /**
+                         * Перестаём перебирать точки, когда уже ясно, что внутри окружности содержится половина всего множества точек.
+                         * Если эта окружность меньше минимальной найденной(которая записывается в circle), то записываем её как минимальную.
+                         */
                         if (circle.r - circle1.r > 0.001){
                             circle.r = circle1.r;
                             circle.x = circle1.x;
@@ -90,11 +98,12 @@ public class Problem {
         }
         Rcircle = new Circle(0, 0, 4);
         k = 0;
-        for (Point p : points){
+        // Далее проводим аналогичные действия со второй окружность, проверяя, не совпадают ли центры первой и второй.
+        for (Point p1 : points){
             for (Point p2 : points){
-                if ((Math.abs(p.x - circle.x) > 0.001) && (Math.abs(p.y - circle.y) > 0.001)) {
-                    circle1.x = p.x;
-                    circle1.y = p.y;
+                if ((Math.abs(p1.x - circle.x) > 0.001) && (Math.abs(p1.y - circle.y) > 0.001)) {
+                    circle1.x = p1.x;
+                    circle1.y = p1.y;
                     circle1.SetR(p2);
                     for (Point p3 : points) {
                         if (circle1.inside(p3)) {
@@ -113,7 +122,7 @@ public class Problem {
                 k = 0;
             }
         }
-        for (Point p : points){
+        for (Point p : points){ // Перебираем точки множества, перекрашиваем, если они лежат внутри минимальной окружности.
             if (circle.inside(p)){
                 p.solve = true;
             }
